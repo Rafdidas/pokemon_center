@@ -14,7 +14,11 @@ async function fetchPokemonData(limit = 15, offset = 0) {
 
     const speciesDetailsResponse = await fetch(pokemonDetails.species.url);
     const speciesDetails = await speciesDetailsResponse.json();
-    
+
+    //const pokemonTypeResponse = await fetch(pokemonDetails.types.url);
+    //const pokemonTypeDetails = await pokemonTypeResponse.json();
+    console.log(pokemonDetails.types);
+
     // 3. specise 정보에서 한국어 가져오기
     const pokeId = speciesDetails.id;
     const koreanName = speciesDetails.names.find(
@@ -26,27 +30,17 @@ async function fetchPokemonData(limit = 15, offset = 0) {
     const flavorTexts = speciesDetails.flavor_text_entries.find(
       (entry) => entry.language.name === 'ko' && entry.version.name === 'omega-ruby'
     )?.flavor_text;
+    const poke_img = pokemonDetails.sprites.versions['generation-v']['black-white'].animated.front_default;
+    
     return {
       name: koreanName ? koreanName.name : pokemon.name,
-      species: pokemon.url, flavorTexts, generas, pokeId
+      species: pokemon.url, flavorTexts, generas, pokeId, poke_img
     };
   });
 
-  // 2. pokemon 에서 이미지 받아오기
-  const spritesPromises = data.results.map(async (pokemon) => {
-    const pokemonDetailsResponse = await fetch(pokemon.url);
-    const pokemonDetails = await pokemonDetailsResponse.json();
+  return Promise.all(speciesPromises);
 
-    const poke_img = pokemonDetails.sprites.front_default;
-    return{
-      poke_front : poke_img,
-    }
-
-
-    //console.log(pokemonDetails);
-  })
-
-  return Promise.all(speciesPromises, spritesPromises);
+  
 }
 
 
@@ -72,8 +66,8 @@ function App() {
           pokemonData.map((pokemon) => {
               return(
                 <div key={pokemon.pokeId} className='poke_ball' style={style}>
-                  <div>{pokemon.poke_img}</div>
                   <p className='poke_num'>{pokemon.pokeId}</p>
+                  {/* <div><img src={pokemon.poke_img} alt={pokemon.name} /></div> */}
                   <p className='poke_name'>{pokemon.name}</p>
                   <p className='poke_genera'>{pokemon.generas}</p>
                   <p className='summary'>{pokemon.flavorTexts}</p>
