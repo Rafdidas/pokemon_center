@@ -1,0 +1,13 @@
+.poke_search_main {
+    display: block;
+    width: 100%;
+    max-width: 800px;
+    height: 3.73rem;
+    margin: 5rem auto 2rem;
+    padding: 1rem 2.7rem 1rem 1.25rem;
+    background: url('../../../public/img/pokeball.png') no-repeat center right 1rem/ 1.66rem auto #fff;
+    border-radius: .75rem;
+    box-shadow: var(--box-shadow-set, 0 0 #0000), var(--box-shadow-set, 0 0 #0000), var(--box-shadow);
+    border: none;
+    outline: none;
+}

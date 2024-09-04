@@ -1,0 +1,9 @@
+.poke_ball {
+    width: 100%;
+    padding:1.25rem;
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: var(--box-shadow-set, 0 0 #0000), var(--box-shadow-set, 0 0 #0000), var(--box-shadow);
+}
+.poke_ball * {font-family: 'galmuri9';}
+.poke_ball .poke_name {}
