@@ -1,9 +1,59 @@
 .poke_ball {
     width: 100%;
-    padding:1.25rem;
+    padding: 1.25rem;
     background: #fff;
     border-radius: 1rem;
     box-shadow: var(--box-shadow-set, 0 0 #0000), var(--box-shadow-set, 0 0 #0000), var(--box-shadow);
+    cursor: pointer;
 }
-.poke_ball * {font-family: 'galmuri9';}
-.poke_ball .poke_name {}
+
+.poke_ball * {
+    font-family: 'galmuri9';
+}
+.poke_ball .name_section {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+}
+.poke_ball .name_section img {
+    width:24px;
+    height:24px;
+    margin-right:1rem;
+}
+.poke_ball .name_section .poke_name {
+    font-size:1.0666rem;
+}
+.poke_ball .poke_type {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    column-gap: 5px;
+}
+.poke_ball .poke_type > li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:0 10px;
+    border-radius: 1.533rem;
+}
+.poke_ball .poke_type > li > span {
+    color:#fff;
+}
+.poke_ball .poke_type > li > img {
+    width: 20px;
+    height: 20px;
+}
+
+.poke_ball .poke_img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin:1.3rem 0;
+}
+
+.poke_ball .poke_img img {
+    width: auto;
+    height: 80px;
+}

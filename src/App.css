@@ -53,3 +53,94 @@ body {min-width:320px; background:#f2f4f6;}
 
 /* layout */
 .cntbody {position:relative; padding:0 3rem;}
+@media (max-width: 1024px) {
+    .cntbody {
+        padding: 0 1.5rem;
+    }
+}
+
+/* type_color */
+.bg_grass {
+    background: #66a945;
+    border: 1px solid #66a945;
+}
+
+.bg_poison {
+    background: #735198;
+    border: 1px solid #735198;
+}
+
+.bg_fire {
+    background: #e56c3e;
+    border: 1px solid #e56c3e;
+}
+
+.bg_flying {
+    background: #a2c3e7;
+    border: 1px solid #a2c3e7;
+}
+
+.bg_water {
+    background: #5185c5;
+    border: 1px solid #5185c5;
+}
+
+.bg_bug {
+    background: #9fa244;
+    border: 1px solid #9fa244;
+}
+
+.bg_normal {
+    background: #949495;
+    border: 1px solid #949495;
+}
+
+.bg_electric {
+    background: #f6d851;
+    border: 1px solid #f6d851;
+}
+
+.bg_ground {
+    background: #9c7743;
+    border: 1px solid #9c7743;
+}
+
+.bg_fairy {
+    background: #dab4d4;
+    border: 1px solid #dab4d4;
+}
+
+.bg_fighting {
+    background: #e09c40;
+    border: 1px solid #e09c40;
+}
+
+.bg_psychic {
+    background: #dd6b7b;
+    border: 1px solid #dd6b7b;
+}
+
+.bg_rock {
+    background: #bfb889;
+    border: 1px solid #bfb889;
+}
+
+.bg_steel {
+    background: #69a9c7;
+    border: 1px solid #69a9c7;
+}
+
+.bg_ice {
+    background: #6dc8eb;
+    border: 1px solid #6dc8eb;
+}
+
+.bg_ghost {
+    background: #684870;
+    border: 1px solid #684870;
+}
+
+.bg_dragon {
+    background: #535ca8;
+    border: 1px solid #535ca8;
+}

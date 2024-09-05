@@ -5,3 +5,20 @@
     gap:1.5rem;
     padding-top: 2rem;
 }
+@media (max-width: 1024px) {
+    .poke_list {
+        grid-template-columns: repeat(3, minmax(0, 1fr))
+    }
+}
+
+@media (max-width: 680px) {
+    .poke_list {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+    }
+}
+
+@media (max-width: 630px) {
+    .poke_list {
+        grid-template-columns: repeat(1, minmax(0, 1fr))
+    }
+}
