@@ -9,6 +9,7 @@ import TypeList from './component/type-list/typeList.component';
 import Pagination from './component/pagination/pagination.component';
 import { Route, Routes } from 'react-router-dom';
 import Detail from './component/detail/detail.component';
+
 // 포켓몬 데이터를 가져오는 함수
 async function fetchPokemonData(limit = 151, offset = 0) {
   // 1. 기본 data 불러오기
@@ -21,6 +22,9 @@ async function fetchPokemonData(limit = 151, offset = 0) {
 
     const speciesDetailsResponse = await fetch(pokemonDetails.species.url);
     const speciesDetails = await speciesDetailsResponse.json();
+
+    //const typeSpeciesResponse = await fetch(typeListDetails.species.url);
+    //const typeSpecies = await typeSpeciesResponse.json();
     
     // 3. 각 타입의 추가 정보 가져오기
     const typesPromises = pokemonDetails.types.map(async (typeInfo) => {
@@ -133,6 +137,7 @@ function App() {
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   }
+
   
   return (
     <div className="App">
@@ -152,7 +157,7 @@ function App() {
               />
             </>
           } exact  />
-          <Route path='/detail/:id' element={<Detail pokemons={filteredPokemon} />} />
+          <Route path='/detail/:id' element={<Detail  />} />
         </Routes>
       </div>
     </div>

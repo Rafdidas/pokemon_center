@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import './detail.style.css';
 
 async function fetchDetailPokemon(id) {
     const speciesResponse = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`);
@@ -8,7 +8,12 @@ async function fetchDetailPokemon(id) {
 
     const pokemonDetailsResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
     const pokemonDetails = await pokemonDetailsResponse.json();
+
+    const evolutionResponse = await fetch(`https://pokeapi.co/api/v2/evolution-chain/${id}/`);
+    const evolutionDetails = await evolutionResponse.json();
     
+    console.log(evolutionDetails);
+
     const pokeId = speciesData.id;
     const koreanName = speciesData.names.find(
       (name) => name.language.name === 'ko'
@@ -19,7 +24,10 @@ async function fetchDetailPokemon(id) {
     const flavorTexts = speciesData.flavor_text_entries.find(
       (entry) => entry.language.name === 'ko' && entry.version.name === 'x'
     )?.flavor_text;
-    const poke_img = pokemonDetails.sprites.versions['generation-v']['black-white'].animated.front_default;
+    const pokeHeight = pokemonDetails.height;
+    const pokeWeight = pokemonDetails.weight;
+    //const poke_img = pokemonDetails.sprites.versions['generation-v']['black-white'].animated.front_default;
+    const poke_img = pokemonDetails.sprites.other['official-artwork'].front_default;
     
     const typesPromises = pokemonDetails.types.map(async (typeInfo) => {
       const typeResponse = await fetch(typeInfo.type.url);
@@ -30,17 +38,35 @@ async function fetchDetailPokemon(id) {
       const engType = typeDetails.names.find(
         (type) => type.language.name === 'en',
       );
-      console.log(koreanType);
+      
       return {
         name: typeInfo.type.name,
         koreanType: koreanType ? koreanType.name : typeInfo.type.name,
         engType: engType ? engType.name.toLocaleLowerCase() : typeInfo.type.name,
         url: typeInfo.type.url,
       }
-      
     });
     const types = await Promise.all(typesPromises);
-    
+
+    const abilityPromises = pokemonDetails.abilities.map(async (abil) => {
+      const abilityResponse = await fetch(abil.ability.url);
+      const abilityDetails = await abilityResponse.json();
+      const koreanAbility = abilityDetails.names.find(
+        (abil) => abil.language.name === 'ko',
+      );
+      const koreanAbilityInfo = abilityDetails.flavor_text_entries.find(
+        (abil) => abil.language.name === 'ko' && abil.version_group.name === 'x-y',
+      )?.flavor_text;
+
+      //console.log(koreanAbilityInfo);
+      
+      return {
+        name: abil.name,
+        koreanAbility: koreanAbility ? koreanAbility.name : abil.type.name,
+        koreanAbilityInfo,
+      }
+    });
+    const abilities = await Promise.all(abilityPromises);
 
     return {
         pokeId,
@@ -48,15 +74,20 @@ async function fetchDetailPokemon(id) {
         flavorTexts,
         generas,
         poke_img,
-        types
+        types,
+        abilities,
+        pokeHeight,
+        pokeWeight
     }
+    
+    
 }
 
 const Detail = () => {
 
     const { id } = useParams();
-    const [pokemonDetail, setPokemonDetail] = useState([]);
-    const { pokeId, name, flavorTexts, generas, poke_img,  } = pokemonDetail;
+    const [pokemonDetail, setPokemonDetail] = useState({});
+    const { pokeId, name, flavorTexts, generas, poke_img, types, abilities, pokeHeight, pokeWeight } = pokemonDetail;
 
     useEffect(() => {
         fetchDetailPokemon(id).then((finalData) => {
@@ -66,15 +97,16 @@ const Detail = () => {
 
     return (
         <div id="detail">
-            <p>{pokeId}</p>
+            <p>NO. {pokeId}</p>
             <p>{name}</p>
             <p>{generas}</p>
             <p>{flavorTexts}</p>
-            <div><img src={poke_img} alt={name} /></div>
-            <p>{}</p>
-            {/* <ul className='poke_type'>
+            <div className="detail_img"><img src={poke_img} alt={name} /></div>
+            <p>{pokeHeight}</p>
+            <p>{pokeWeight}</p>
+            <ul className='poke_type'>
             {
-                pokemonDetail.types.map((type,index) => {
+                types && types.map((type,index) => {
                 return (
                     <li 
                         key={index} 
@@ -86,7 +118,18 @@ const Detail = () => {
                 )
                 })
             }
-            </ul> */}
+            </ul>
+            <ul className='poke_ability'>
+            {
+                abilities && abilities.map((abil,index) => {
+                return (
+                    <li key={index}>
+                        <span>{abil.koreanAbility} {abil.koreanAbilityInfo}</span>
+                    </li>
+                )
+                })
+            }
+            </ul>
             
         </div>
     );
