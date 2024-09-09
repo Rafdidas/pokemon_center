@@ -132,6 +132,7 @@ function App() {
 
   const onTypeChange = (koreanType) => {
     setTypeFilter(koreanType);
+    setSearchField('');
   }
 
   // 페이지 변경 함수
