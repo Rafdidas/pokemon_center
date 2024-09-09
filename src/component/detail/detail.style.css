@@ -1,2 +1,138 @@
-#detail .poke_type img {width:20px; height:20px;}
-#detail .detail_img img {width:20px; }
+#detail .detail_box {
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    align-items: center;
+    padding: 4rem 1.25rem;
+}
+
+#detail .detail_box .inner_box * {
+    font-family: 'galmuri9';
+}
+
+#detail .detail_box .inner_box {
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    row-gap: 7px;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    background: #fff;
+    box-shadow: var(--box-shadow-set, 0 0 #0000), var(--box-shadow-set, 0 0 #0000), var(--box-shadow);
+}
+
+#detail .detail_box .inner_box .info {
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 7px;
+}
+
+#detail .detail_box .inner_box .info * {
+    font-size: 1.0666rem;
+}
+
+#detail .detail_box .inner_box .name_section {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+}
+
+#detail .detail_box .inner_box .name_section img {
+    width: 24px;
+    height: 24px;
+    margin-right: 1rem;
+}
+
+#detail .detail_box .inner_box .name_section .poke_name {
+    font-size: 1.133rem;
+}
+
+#detail .detail_box .inner_box .detail_img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin:2rem 0;
+}
+
+#detail .detail_box .inner_box .detail_img img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+
+}
+
+#detail .detail_box .inner_box .poke_type {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    column-gap: 5px;
+}
+
+#detail .detail_box .inner_box .poke_type > li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 5px;
+    padding: 0 10px;
+    border-radius: 1.533rem;
+}
+
+#detail .detail_box .inner_box .poke_type > li > span {
+    color: #fff;
+}
+
+#detail .detail_box .inner_box .poke_type > li > img {
+    width: 20px;
+    height: 20px;
+}
+
+#detail .detail_box .inner_box .height_weight {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    column-gap: 2rem;
+}
+
+#detail .detail_box .inner_box .poke_genera {
+    color:#99b2b9;
+}
+
+#detail .detail_box .inner_box .flavor {
+    text-align:center;
+}
+
+#detail .detail_box .back_btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+    cursor: pointer;
+}
+
+#detail .detail_box .back_btn > span {
+    font-family: 'galmuri9';
+}
+
+#detail .detail_box .back_btn > img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+@media (max-width: 680px) {
+    #detail .detail_box {
+        padding: 4rem 0;
+    }
+    #detail .detail_box .inner_box {
+        padding:2rem;
+    }
+    #detail .detail_box .inner_box .info * {
+        font-size: 1rem;
+    }
+    
+}

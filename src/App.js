@@ -9,6 +9,7 @@ import TypeList from './component/type-list/typeList.component';
 import Pagination from './component/pagination/pagination.component';
 import { Route, Routes } from 'react-router-dom';
 import Detail from './component/detail/detail.component';
+import Footer from './component/footer/footer.component';
 
 // 포켓몬 데이터를 가져오는 함수
 async function fetchPokemonData(limit = 151, offset = 0) {
@@ -160,6 +161,7 @@ function App() {
           <Route path='/detail/:id' element={<Detail  />} />
         </Routes>
       </div>
+      <Footer/>
     </div>
   );
 }

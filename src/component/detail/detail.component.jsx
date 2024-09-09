@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import './detail.style.css';
 
 async function fetchDetailPokemon(id) {
@@ -79,8 +79,6 @@ async function fetchDetailPokemon(id) {
         pokeHeight,
         pokeWeight
     }
-    
-    
 }
 
 const Detail = () => {
@@ -88,6 +86,8 @@ const Detail = () => {
     const { id } = useParams();
     const [pokemonDetail, setPokemonDetail] = useState({});
     const { pokeId, name, flavorTexts, generas, poke_img, types, abilities, pokeHeight, pokeWeight } = pokemonDetail;
+    
+    const backBtn = useNavigate();
 
     useEffect(() => {
         fetchDetailPokemon(id).then((finalData) => {
@@ -97,40 +97,53 @@ const Detail = () => {
 
     return (
         <div id="detail">
-            <p>NO. {pokeId}</p>
-            <p>{name}</p>
-            <p>{generas}</p>
-            <p>{flavorTexts}</p>
-            <div className="detail_img"><img src={poke_img} alt={name} /></div>
-            <p>{pokeHeight}</p>
-            <p>{pokeWeight}</p>
-            <ul className='poke_type'>
-            {
-                types && types.map((type,index) => {
-                return (
-                    <li 
-                        key={index} 
-                        className={`bg_${type.engType}`}
-                    >
-                        <img src={process.env.PUBLIC_URL + `/img/type_${type.engType}.svg`} alt={type.engType} />
-                        <span>{type.koreanType}</span>
-                    </li>
-                )
-                })
-            }
-            </ul>
-            <ul className='poke_ability'>
-            {
-                abilities && abilities.map((abil,index) => {
-                return (
-                    <li key={index}>
-                        <span>{abil.koreanAbility} {abil.koreanAbilityInfo}</span>
-                    </li>
-                )
-                })
-            }
-            </ul>
-            
+            <div className="detail_box">
+              <div className="inner_box">
+                <div className='name_section'>
+                    <img src={process.env.PUBLIC_URL + `/img/pixel_ball.png`} alt="pixel_ball" />
+                    <p className='poke_name'>{pokeId}. {name}</p>
+                </div>
+                <div className="detail_img"><img src={poke_img} alt={name} /></div>
+                <div className="info">
+                  <ul className='poke_type'>
+                  {
+                      types && types.map((type,index) => {
+                      return (
+                          <li 
+                              key={index} 
+                              className={`bg_${type.engType}`}
+                          >
+                              <img src={process.env.PUBLIC_URL + `/img/type_${type.engType}.svg`} alt={type.engType} />
+                              <span>{type.koreanType}</span>
+                          </li>
+                      )
+                      })
+                  }
+                  </ul>
+                  <p className="poke_genera">{generas}</p>
+                  <div className="height_weight">
+                    <p>신장 : {pokeHeight}m</p>
+                    <p>무게 : {pokeWeight}kg</p>
+                  </div>
+                  <ul className='poke_ability'>
+                  {
+                      abilities && abilities.map((abil,index) => {
+                      return (
+                          <li key={index}>
+                              <span>{abil.koreanAbility} : {abil.koreanAbilityInfo}</span>
+                          </li>
+                      )
+                      })
+                  }
+                  </ul>
+                  <p className="flavor">{flavorTexts}</p>
+                </div>
+              </div>
+              <p className="back_btn" onClick={() => {backBtn(`/`)}}>
+                <img src={process.env.PUBLIC_URL + '/img/masterball.png'} alt="masterball" />
+                <span >뒤로 가기</span>
+              </p>
+            </div>
         </div>
     );
 }
