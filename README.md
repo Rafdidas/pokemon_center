@@ -1,5 +1,5 @@
 ## POKEDEX
-#### pokeApi 를 활용한 1번 부터 151번 까지의 포켓몬 도감 작업 중
+#### pokeApi 를 활용한 1번 부터 151번 까지의 포켓몬 도감 (지속 업데이트 중)
 #### 사이트 주소 : https://rafdidas.github.io/poke_dex/
 #### APi 정보 : https://pokeapi.co/docs/v2#pokemon-species
 
