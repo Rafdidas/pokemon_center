@@ -1,5 +1,7 @@
 
 import { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+
 import './App.css';
 
 import Header from './component/header/header.component';
@@ -7,7 +9,6 @@ import SearchBox from './component/search-box/searchBox.component';
 import PokeList from './component/pokemon-list/pokeList.component';
 import TypeList from './component/type-list/typeList.component';
 import Pagination from './component/pagination/pagination.component';
-import { Route, Routes } from 'react-router-dom';
 import Detail from './component/detail/detail.component';
 import Footer from './component/footer/footer.component';
 
@@ -23,9 +24,6 @@ async function fetchPokemonData(limit = 151, offset = 0) {
 
     const speciesDetailsResponse = await fetch(pokemonDetails.species.url);
     const speciesDetails = await speciesDetailsResponse.json();
-
-    //const typeSpeciesResponse = await fetch(typeListDetails.species.url);
-    //const typeSpecies = await typeSpeciesResponse.json();
     
     // 3. 각 타입의 추가 정보 가져오기
     const typesPromises = pokemonDetails.types.map(async (typeInfo) => {
@@ -55,15 +53,9 @@ async function fetchPokemonData(limit = 151, offset = 0) {
     const generas = speciesDetails.genera.find(
       (gen) => gen.language.name === 'ko'
     )?.genus;
-    
-    
     const flavorTexts = speciesDetails.flavor_text_entries.find(
       (entry) => entry.language.name === 'ko' && entry.version.name === 'x'
     )?.flavor_text;
-    // const flavorTexts = speciesDetails.flavor_text_entries
-    //   .filter((entry) => entry.language.name === 'ko' && entry.version.name === 'omega-ruby')
-    //   .map((entry) => entry.flavor_text);
-
     const poke_img = pokemonDetails.sprites.versions['generation-v']['black-white'].animated.front_default;
 
     return {
@@ -139,7 +131,6 @@ function App() {
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   }
-
   
   return (
     <div className="App">
