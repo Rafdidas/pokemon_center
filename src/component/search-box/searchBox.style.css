@@ -1,3 +1,9 @@
+.poke_search_main,
+.poke_search_main * {
+    font-family: 'galmuri9';
+    font-size: 1rem;
+}
+
 .poke_search_main {
     display: block;
     width: 100%;

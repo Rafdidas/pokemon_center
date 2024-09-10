@@ -146,7 +146,7 @@ function App() {
       <Header />
       <div className='cntbody'>
         <Routes>
-          <Route path='/' element={
+          <Route path='/*' element={
             <>
               <SearchBox onSearchChange={onSearchChange} />
               <TypeList pokemons={filteredPokemon} onTypeChange={onTypeChange} />
@@ -158,7 +158,7 @@ function App() {
                 currentPage={currentPage}
               />
             </>
-          } exact  />
+          } />
           <Route path='/detail/:id' element={<Detail  />} />
         </Routes>
       </div>
