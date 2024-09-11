@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import './detail.style.css';
+import Loading from "../loading/loading.component";
 
 async function fetchDetailPokemon(id) {
     const speciesResponse = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`);
@@ -86,14 +87,20 @@ const Detail = () => {
     const { id } = useParams();
     const [pokemonDetail, setPokemonDetail] = useState({});
     const { pokeId, name, flavorTexts, generas, poke_img, types, abilities, pokeHeight, pokeWeight } = pokemonDetail;
-    
+    const [loading, setLoading] = useState(true);
     const backBtn = useNavigate();
 
     useEffect(() => {
-        fetchDetailPokemon(id).then((finalData) => {
-            setPokemonDetail(finalData);
-        });
+      setLoading(true);  
+      fetchDetailPokemon(id).then((finalData) => {
+          setPokemonDetail(finalData);
+          setLoading(false);
+       });
     }, [id]);
+
+     if (loading) {
+        return <Loading/>;
+    }
 
     return (
         <div id="detail">

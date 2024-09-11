@@ -11,6 +11,7 @@ import TypeList from './component/type-list/typeList.component';
 import Pagination from './component/pagination/pagination.component';
 import Detail from './component/detail/detail.component';
 import Footer from './component/footer/footer.component';
+import Loading from './component/loading/loading.component';
 
 // 포켓몬 데이터를 가져오는 함수
 async function fetchPokemonData(limit = 151, offset = 0) {
@@ -72,19 +73,22 @@ async function fetchPokemonData(limit = 151, offset = 0) {
   return Promise.all(speciesPromises);
 }
 
-function App() {
+const App = () => {
   
   const [pokemonData, setPokemonData] = useState([]);
   const [searchField, setSearchField] = useState('');
   const [filteredPokemon, setFilteredPokemon] = useState([]);
   const [typeFilter, setTypeFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1); // 현재페이지
+  const [loading, setLoading] = useState(true);
   const pokemonsPerPage = 16; // 페이지 당 포켓몬
 
   useEffect(() => {
+    setLoading(true);
     fetchPokemonData().then((finalData) => {
       setPokemonData(finalData);
       setFilteredPokemon(finalData);
+      setLoading(false);
     });
   }, []);
 
@@ -136,22 +140,28 @@ function App() {
     <div className="App">
       <Header />
       <div className='cntbody'>
-        <Routes>
-          <Route path='/*' element={
-            <>
-              <SearchBox onSearchChange={onSearchChange} />
-              <TypeList pokemons={filteredPokemon} onTypeChange={onTypeChange} />
-              <PokeList pokemons={currentPokemons} />
-              <Pagination
-                pokemonsPerPage={pokemonsPerPage}
-                totalPokemons={filteredPokemon.length}
-                paginate={paginate}
-                currentPage={currentPage}
-              />
-            </>
-          } />
-          <Route path='/detail/:id' element={<Detail  />} />
-        </Routes>
+        {
+          loading ? (
+            <Loading />
+          ) : (
+        
+          <Routes>
+            <Route path='/*' element={
+              <>
+                <SearchBox onSearchChange={onSearchChange} />
+                <TypeList pokemons={filteredPokemon} onTypeChange={onTypeChange} />
+                <PokeList pokemons={currentPokemons} />
+                <Pagination
+                  pokemonsPerPage={pokemonsPerPage}
+                  totalPokemons={filteredPokemon.length}
+                  paginate={paginate}
+                  currentPage={currentPage}
+                />
+              </>
+            } />
+            <Route path='/detail/:id' element={<Detail  />} />
+          </Routes>
+        )}
       </div>
       <Footer/>
     </div>

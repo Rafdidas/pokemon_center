@@ -51,6 +51,16 @@ body {min-width:320px; background:#f2f4f6;}
     --box-shadow-set: 0 0 #0000;
 }
 
+@keyframes loading {
+    0% {
+        transform: translateY(-15px);
+    }
+
+    100% {
+        transform: translateY(5px);
+    }
+}
+
 /* layout */
 .cntbody {position:relative; padding:0 3rem;}
 @media (max-width: 1024px) {
