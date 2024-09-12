@@ -5,7 +5,7 @@ const PokeBall = ({ pokemons }) => {
     const navigate = useNavigate();
 
     return (
-        <div key={pokemons.pokeId} className='poke_ball' onClick={() => { navigate(`/detail/${pokemons.pokeId}`) }}>
+        <div key={pokemons.pokeId} className='poke_ball' onClick={() => { navigate(`/poke_dex/detail/${pokemons.pokeId}`) }}>
             <div className='name_section'>
                 <img src={process.env.PUBLIC_URL + `/img/pixel_ball.png`} alt="pixel_ball" />
                 <p className='poke_name'>{pokemons.pokeId}. {pokemons.name}</p>
