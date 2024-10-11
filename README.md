@@ -102,6 +102,49 @@ async function fetchPokemonData(limit = 151, offset = 0) {
   return Promise.all(speciesPromises);
 }
 ```
+### 5.2. 타입 수집 시 중복 문제와 검색 시 초기화 문제
+- 타입 수집시 중복이 상당히 많아서 중복제거 추가
+- 넘버 페이지네이션을 사용하기에 검색 시 페이지네이션 초기화가 필요했음
+
+   ```
+   // 1. 모든 타입 수집
+   const allTypes = pokemons.flatMap((pokemon) => {
+        return pokemon.types.map((type) => {
+          return {
+                koreanType: type.koreanType,
+                engType: type.engType
+            };
+        });
+   })
+   // 2. 중복 제거
+   const uniqueTypes = [...new Map(allTypes.map(type => [type.koreanType, type])).values()];
+   ```
+   ```
+   // 이름 검색 필터링
+  useEffect(() => {
+    const newFilteredPokemon = pokemonData.filter((poke) => {
+      return poke.name.toLocaleLowerCase().includes(searchField);
+    });
+    setFilteredPokemon(newFilteredPokemon);
+    setCurrentPage(1); // 필터 적용 시 페이지를 첫 페이지로 초기화
+  }, [pokemonData, searchField]);
+
+  // 타입 필터링 
+  useEffect(() => {
+    if (typeFilter === '') {
+      setFilteredPokemon(pokemonData); // 타입 필터가 없으면 모든 포켓몬 보여줌
+    } else {
+      const fiteredByType = pokemonData.filter((pokemon) => {
+        return (
+          pokemon.types.some((type) => type.koreanType === typeFilter)
+        );
+      });
+      setFilteredPokemon(fiteredByType);
+    }
+    setCurrentPage(1); // 필터 적용 시 페이지를 첫 페이지로 초기화
+  }, [typeFilter, pokemonData]);
+   ```
+
 ## 6. 회고 / 느낀점
 - Poke APi는 가져오는 방식이 너무 복잡했던터라 api 활용에 대한 실습을 해보기 좋았다.
 - 로딩에 대한 문제를 생각해 볼 수 있었고, 생각 중 이다.
