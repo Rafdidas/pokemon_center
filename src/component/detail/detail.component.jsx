@@ -146,7 +146,7 @@ const Detail = () => {
                   <p className="flavor">{flavorTexts}</p>
                 </div>
               </div>
-              <p className="back_btn" onClick={() => {backBtn(`/poke_dex/`)}}>
+              <p className="back_btn" onClick={() => {backBtn(`/`)}}>
                 <img src={process.env.PUBLIC_URL + '/img/masterball.png'} alt="masterball" />
                 <span >뒤로 가기</span>
               </p>

@@ -8,7 +8,7 @@ const Header = () => {
         <div className="App">
             <header id='header'>
                 <div className="inner">
-                    <h1 className='logo'><Link to='/poke_dex/'><img src={process.env.PUBLIC_URL + '/img/logo.png'} alt="Pokedex" /></Link></h1>
+                    <h1 className='logo'><Link to='/'><img src={process.env.PUBLIC_URL + '/img/logo.png'} alt="Pokedex" /></Link></h1>
                 </div>
             </header>
             <div className='cnt'>
