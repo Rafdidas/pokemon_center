@@ -8,7 +8,7 @@ const App = () => {
   
   return (
     <Routes>
-      <Route path="/poke_dex" element={<Header/>} >
+      <Route path="/*" element={<Header/>} >
         <Route index element={<Home/>} />
         <Route path='detail/:id' element={<Detail />} />
       </Route>
