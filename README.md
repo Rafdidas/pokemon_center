@@ -1,5 +1,6 @@
 # POKEDEX
 https://pokedex-center-v1.netlify.app/
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/419dcec6-44a3-4bd8-8e35-20d52d1c98bc/deploy-status)](https://app.netlify.com/sites/pokedex-center-v1/deploys)
 
 ## 1. 소개 및 참여 인원
