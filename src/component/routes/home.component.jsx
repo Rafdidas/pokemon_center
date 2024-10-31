@@ -1,16 +1,16 @@
 
 import { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
 
 import SearchBox from '../search-box/searchBox.component';
 import PokeList from '../pokemon-list/pokeList.component';
 import TypeList from '../type-list/typeList.component';
 import Pagination from '../pagination/pagination.component';
-import Detail from '../detail/detail.component';
+import MoreButton from '../more-button/more-button.component';
 import Loading from '../loading/loading.component';
 
+
 // 포켓몬 데이터를 가져오는 함수
-async function fetchPokemonData(limit = 151, offset = 0) {
+async function fetchPokemonData(limit = 16, offset = 0) {
   // 1. 기본 data 불러오기
   const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
   const data = await response.json();
@@ -70,23 +70,26 @@ async function fetchPokemonData(limit = 151, offset = 0) {
 }
 
 const Home = () => {
-  
   const [pokemonData, setPokemonData] = useState([]);
-  const [searchField, setSearchField] = useState('');
+  const [searchField, setSearchField] = useState("");
   const [filteredPokemon, setFilteredPokemon] = useState([]);
-  const [typeFilter, setTypeFilter] = useState('');
-  const [currentPage, setCurrentPage] = useState(1); // 현재페이지
+  const [typeFilter, setTypeFilter] = useState("");
   const [loading, setLoading] = useState(true);
+  const [limit, setLimit] = useState(16);
+  const [offset, setOffset] = useState(0);
+  const totalPokemons = 151;
+
+  const [currentPage, setCurrentPage] = useState(1); // 현재페이지
   const pokemonsPerPage = 16; // 페이지 당 포켓몬
 
   useEffect(() => {
     setLoading(true);
-    fetchPokemonData().then((finalData) => {
-      setPokemonData(finalData);
-      setFilteredPokemon(finalData);
+    fetchPokemonData(limit, offset).then((newData) => {
+      setPokemonData((prevData) => [...prevData, ...newData]); // 기존 데이터에 추가
+      setFilteredPokemon((prevData) => [...prevData, ...newData]);
       setLoading(false);
     });
-  }, []);
+  }, [offset]);
 
   // 이름 검색 필터링
   useEffect(() => {
@@ -97,63 +100,66 @@ const Home = () => {
     setCurrentPage(1); // 필터 적용 시 페이지를 첫 페이지로 초기화
   }, [pokemonData, searchField]);
 
-  // 타입 필터링 
+  // 타입 필터링
   useEffect(() => {
-    if (typeFilter === '') {
+    if (typeFilter === "") {
       setFilteredPokemon(pokemonData); // 타입 필터가 없으면 모든 포켓몬 보여줌
     } else {
       const fiteredByType = pokemonData.filter((pokemon) => {
-        return (
-          pokemon.types.some((type) => type.koreanType === typeFilter)
-        );
+        return pokemon.types.some((type) => type.koreanType === typeFilter);
       });
       setFilteredPokemon(fiteredByType);
     }
     setCurrentPage(1); // 필터 적용 시 페이지를 첫 페이지로 초기화
   }, [typeFilter, pokemonData]);
 
-  // 페이지네이션 관련 계산
-  const indexOfLastPokemon = currentPage * pokemonsPerPage;
-  const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
-  const currentPokemons = filteredPokemon.slice(indexOfFirstPokemon, indexOfLastPokemon);
-
   const onSearchChange = (envent) => {
     const searchFieldSrting = envent.target.value.toLocaleLowerCase();
     setSearchField(searchFieldSrting);
-  }
+  };
 
   const onTypeChange = (koreanType) => {
     setTypeFilter(koreanType);
-    setSearchField('');
-  }
+    setSearchField("");
+  };
 
-  // 페이지 변경 함수
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  }
-  
+  // // 페이지네이션 관련 계산
+  // const indexOfLastPokemon = currentPage * pokemonsPerPage;
+  // const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
+  // const currentPokemons = filteredPokemon.slice(
+  //   indexOfFirstPokemon,
+  //   indexOfLastPokemon
+  // );
+  // // 페이지 변경 함수
+  // const paginate = (pageNumber) => {
+  //   setCurrentPage(pageNumber);
+  // };
+
+  const loadMorePokemons = () => {
+    if (pokemonData.length < totalPokemons) {
+      setOffset((prevOffset) => prevOffset + limit);
+    }
+  };
+
   return (
-    
-    <div className='cntbody'>
-    {
-        loading ? (
+    <div className="cntbody">
+      {loading && pokemonData.length === 0 ? (
         <Loading />
-        ) : (
-    
+      ) : (
         <>
-            <SearchBox onSearchChange={onSearchChange} />
-            <TypeList pokemons={filteredPokemon} onTypeChange={onTypeChange} />
-            <PokeList pokemons={currentPokemons} />
-            <Pagination
-                pokemonsPerPage={pokemonsPerPage}
-                totalPokemons={filteredPokemon.length}
-                paginate={paginate}
-                currentPage={currentPage}
-            />
+          <SearchBox onSearchChange={onSearchChange} />
+          <TypeList pokemons={filteredPokemon} onTypeChange={onTypeChange} />
+          <PokeList pokemons={filteredPokemon} />
+          {/* <Pagination
+            pokemonsPerPage={pokemonsPerPage}
+            totalPokemons={filteredPokemon.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          /> */}
+          <MoreButton loadMorePokemons={loadMorePokemons} />
         </>
-    )}
+      )}
     </div>
-      
   );
 }
 

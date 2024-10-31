@@ -1,0 +1,19 @@
+.load-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 85px;
+    margin: 3rem auto;
+    cursor: pointer;
+}
+
+.load-more > span {
+    font-family: 'galmuri9';
+}
+
+.load-more > img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}

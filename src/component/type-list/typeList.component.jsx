@@ -1,18 +1,20 @@
 import './typeList.style.css';
+import TYPE_DATA from '../../type_data';
 
 const TypeList = ({ pokemons, onTypeChange }) => {
     
     // 1. 모든 타입 수집
-    const allTypes = pokemons.flatMap((pokemon) => {
-        return pokemon.types.map((type) => {
-          return {
-                koreanType: type.koreanType,
-                engType: type.engType
-            };
-        });
-    })
-    // 2. 중복 제거
-    const uniqueTypes = [...new Map(allTypes.map(type => [type.koreanType, type])).values()];
+    // const allTypes = pokemons.flatMap((pokemon) => {
+    //     return pokemon.types.map((type) => {
+    //       return {
+    //             koreanType: type.koreanType,
+    //             engType: type.engType
+    //         };
+    //     });
+    // })
+    // // 2. 중복 제거
+    // const uniqueTypes = [...new Map(allTypes.map(type => [type.koreanType, type])).values()];
+    const uniqueTypes = TYPE_DATA;
     
     return (
         <ul className='type_list'>
